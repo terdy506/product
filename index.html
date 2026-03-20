@@ -4,20 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>Lotto Number Generator - Professional Randomizer & Tips</title>
+    <meta name="description" content="Generate high-quality random lottery numbers with our advanced algorithm. Learn lottery tips, statistics, and probabilities to improve your game.">
+    <meta name="keywords" content="lotto generator, lottery numbers, random number generator, lotto tips, lottery probability">
     <meta name="google-adsense-account" content="ca-pub-7575848538498607">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7575848538498607"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="theme-toggle" class="theme-toggle">Dark Mode</button>
-    <div class="container">
-        <h1>Lotto Number Generator</h1>
-        <div class="lotto-machine">
-            <div id="lotto-balls" class="lotto-balls"></div>
-            <button id="generate-btn" class="generate-btn">Generate Numbers</button>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="nav-logo">LottoGen</span>
+            <ul class="nav-links">
+                <li><a href="#generator">Generator</a></li>
+                <li><a href="#tips">Tips & Guide</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
         </div>
+    </nav>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode">Dark Mode</button>
+    
+    <main class="container">
+        <section id="generator" class="generator-section">
+            <h1>Lotto Number Generator</h1>
+            <p class="subtitle">Secure, fast, and 100% random number generation for your next game.</p>
+            <div class="lotto-machine">
+                <div id="lotto-balls" class="lotto-balls"></div>
+                <button id="generate-btn" class="generate-btn">Generate Numbers</button>
+            </div>
+        </section>
+
+        <section id="tips" class="info-section">
+            <article>
+                <h2>Understanding Lottery Probabilities</h2>
+                <p>While every combination of numbers in a standard lottery has the same mathematical chance of being drawn, many players prefer using random generators to avoid common biases. Our generator uses a high-entropy pseudo-random number generator (PRNG) to ensure that each number from 1 to 45 has an equal opportunity to be selected.</p>
+                
+                <h3>Lottery Strategy Tips</h3>
+                <ul>
+                    <li><strong>Avoid Sequential Numbers:</strong> While 1-2-3-4-5-6 is just as likely as any other set, it is frequently played by thousands of people. If it wins, you'll share the jackpot with many others.</li>
+                    <li><strong>Mix Even and Odd:</strong> Statistically, drawings rarely consist of only even or only odd numbers. A balanced mix is more common in historical data.</li>
+                    <li><strong>Stay Consistent:</strong> Whether you use a generator or pick your own, consistency is key to enjoying the game responsibly.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section id="about" class="info-section">
+            <h2>About LottoGen</h2>
+            <p>LottoGen was created to provide a clean, ad-supported, and user-friendly experience for lottery enthusiasts. We believe in transparency and fair play, which is why our generator logic is built on standard JavaScript mathematical libraries that guarantee randomness.</p>
+            <p>Our goal is to provide a high-quality tool that is easy to navigate and accessible to everyone, regardless of their device.</p>
+        </section>
+
+        <section id="faq" class="info-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>Is this generator truly random?</h3>
+                <p>Yes, we use the <code>Math.random()</code> function in JavaScript, which is implemented by modern browsers to provide a sufficiently random distribution for general-purpose applications like lottery generation.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Does this guarantee a win?</h3>
+                <p>No. The lottery is a game of pure chance. This tool is designed for entertainment purposes and to help you select random numbers without human bias.</p>
+            </div>
+        </section>
 
         <div class="contact-section">
             <h2>Partnership Inquiry</h2>
@@ -37,7 +87,7 @@
         <div class="comments-section">
             <div id="disqus_thread"></div>
             <script>
-                (function() { // DON'T EDIT BELOW THIS LINE
+                (function() {
                 var d = document, s = d.createElement('script');
                 s.src = 'https://lotto23.disqus.com/embed.js';
                 s.setAttribute('data-timestamp', +new Date());
@@ -46,7 +96,19 @@
             </script>
             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
-    </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 LottoGen. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>

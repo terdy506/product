@@ -1,4 +1,3 @@
-
 class LottoBall extends HTMLElement {
     constructor() {
         super();
@@ -15,15 +14,19 @@ class LottoBall extends HTMLElement {
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
-                background: radial-gradient(circle at 20px 20px, var(--ball-color, #f0f2f5), #a0a0a0);
+                background: radial-gradient(circle at 20px 20px, var(--ball-color, #f0f2f5), #808080);
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 color: #fff;
                 font-size: 24px;
                 font-weight: bold;
-                margin: 0 8px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                margin: 0;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                transition: transform 0.3s ease;
+            }
+            .ball:hover {
+                transform: scale(1.1);
             }
         `;
 
@@ -50,6 +53,8 @@ customElements.define('lotto-ball', LottoBall);
 document.getElementById('generate-btn').addEventListener('click', () => {
     const lottoBallsContainer = document.getElementById('lotto-balls');
     lottoBallsContainer.innerHTML = '';
+    
+    // Generate 6 unique numbers
     const numbers = new Set();
     while(numbers.size < 6) {
         const randomNumber = Math.floor(Math.random() * 45) + 1;
@@ -58,21 +63,23 @@ document.getElementById('generate-btn').addEventListener('click', () => {
 
     const sortedNumbers = Array.from(numbers).sort((a,b) => a - b);
 
-    sortedNumbers.forEach(number => {
-        const lottoBall = document.createElement('lotto-ball');
-        lottoBall.setAttribute('number', number);
-        const color = getColorForNumber(number);
-        lottoBall.setAttribute('color', color);
-        lottoBallsContainer.appendChild(lottoBall);
+    sortedNumbers.forEach((number, index) => {
+        setTimeout(() => {
+            const lottoBall = document.createElement('lotto-ball');
+            lottoBall.setAttribute('number', number);
+            const color = getColorForNumber(number);
+            lottoBall.setAttribute('color', color);
+            lottoBallsContainer.appendChild(lottoBall);
+        }, index * 150); // Animated delay for better UX
     });
 });
 
 function getColorForNumber(number) {
-    if (number <= 10) return '#f44336';
-    if (number <= 20) return '#ff9800';
-    if (number <= 30) return '#ffeb3b';
-    if (number <= 40) return '#4caf50';
-    return '#2196f3';
+    if (number <= 10) return '#f44336'; // Red
+    if (number <= 20) return '#ff9800'; // Orange
+    if (number <= 30) return '#ffeb3b'; // Yellow
+    if (number <= 40) return '#4caf50'; // Green
+    return '#2196f3'; // Blue
 }
 
 // Theme Toggle Logic
