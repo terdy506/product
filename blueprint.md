@@ -12,6 +12,7 @@ This project is a web-based lottery number generator with a modern dark/light mo
 *   **Partnership Inquiry Form:** A contact form that allows users to send messages directly via Formspree.
 *   **Disqus Comments:** A real-time comment section for user interaction.
 *   **Google AdSense:** Integrated for monetization with proper verification.
+*   **Google Analytics:** Track user engagement and traffic with G-3M6MV860FN.
 *   **Visual Display:** The generated numbers are displayed in a clear and aesthetically pleasing format using Web Components.
 *   **Modern Design:** The UI is designed with modern CSS, including CSS variables, transitions, and responsive layout.
 
