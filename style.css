@@ -1,12 +1,36 @@
 
+:root {
+    --bg-color: #f0f2f5;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --shadow-color: rgba(0,0,0,0.1);
+    --btn-bg: #4CAF50;
+    --btn-hover: #45a049;
+    --ball-bg: #f0f2f5;
+    --ball-shadow: rgba(0,0,0,0.2);
+}
+
+body.dark-theme {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #f0f2f5;
+    --shadow-color: rgba(0,0,0,0.4);
+    --btn-bg: #3e8e41;
+    --btn-hover: #4CAF50;
+    --ball-bg: #404040;
+    --ball-shadow: rgba(0,0,0,0.5);
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -14,10 +38,11 @@ body {
 }
 
 .lotto-machine {
-    background-color: #fff;
+    background-color: var(--container-bg);
     border-radius: 16px;
     padding: 32px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .lotto-balls {
@@ -27,7 +52,7 @@ body {
 }
 
 .generate-btn {
-    background-color: #4CAF50;
+    background-color: var(--btn-bg);
     color: white;
     border: none;
     padding: 16px 32px;
@@ -38,26 +63,33 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .generate-btn:hover {
-    background-color: #45a049;
+    background-color: var(--btn-hover);
 }
 
-lotto-ball {
-    --ball-color: #f0f2f5;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 20px 20px, var(--ball-color), #a0a0a0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 24px;
+.generate-btn:active {
+    transform: scale(0.98);
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 2px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
     font-weight: bold;
-    margin: 0 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
 }

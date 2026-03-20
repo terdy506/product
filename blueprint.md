@@ -1,20 +1,36 @@
-
 # Lotto Number Generator
 
 ## Overview
 
-This project is a web-based lottery number generator. It provides users with a simple and visually appealing interface to generate random lottery numbers.
+This project is a web-based lottery number generator. It provides users with a simple and visually appealing interface to generate random lottery numbers with a modern dark/light mode toggle.
 
 ## Features
 
 *   **Lottery Number Generation:** Generates a set of 6 unique random numbers between 1 and 45.
 *   **Interactive UI:** A user-friendly interface with a button to trigger the number generation.
-*   **Visual Display:** The generated numbers are displayed in a clear and aesthetically pleasing format.
-*   **Web Components:** The application will use Web Components to create reusable UI elements for displaying the lottery balls.
-*   **Modern Design:** The UI will be designed with modern CSS, including gradients, shadows, and a responsive layout.
+*   **Theme Toggle:** Supports both Dark Mode and Light Mode with persistence via `localStorage`.
+*   **Visual Display:** The generated numbers are displayed in a clear and aesthetically pleasing format using Web Components.
+*   **Modern Design:** The UI is designed with modern CSS, including CSS variables, transitions, and responsive layout.
 
-## Current Plan
+## Implementation Details
 
-1.  **Modify `index.html`:** Update the HTML structure to include a title, a container for the lottery machine, a button to generate numbers, and a display area for the results.
-2.  **Modify `style.css`:** Apply modern CSS to style the page, including a color scheme, fonts, and layout. It will also include styles for the lottery balls and interactive elements.
-3.  **Modify `main.js`:** Implement the JavaScript logic to generate unique lottery numbers and display them on the page. This will include creating a custom element for the lottery balls.
+### Dark/Light Mode
+*   **CSS Variables:** Used for background colors, text colors, and shadows.
+*   **Theme Toggle Button:** A button in the top right allows users to switch between themes.
+*   **Persistence:** The chosen theme is saved in `localStorage` so it persists after page reloads.
+
+### Web Components
+*   **`lotto-ball`:** A custom element that represents a lottery ball with dynamic number and color based on its value.
+
+## Development History
+
+1.  **Initial Version:** Basic structure with `index.html`, `style.css`, and `main.js`.
+2.  **Theme Implementation:** 
+    *   Added CSS variables to `style.css`.
+    *   Added Dark Mode styles using `.dark-theme` class.
+    *   Added theme toggle button to `index.html`.
+    *   Implemented toggle logic and storage in `main.js`.
+
+## Future Plans
+
+1.  **Deployment:** Deploy the application to a remote repository using `git push`.

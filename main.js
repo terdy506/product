@@ -74,3 +74,21 @@ function getColorForNumber(number) {
     if (number <= 40) return '#4caf50';
     return '#2196f3';
 }
+
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Check for saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-theme');
+    themeToggle.textContent = 'Light Mode';
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    const isDark = body.classList.contains('dark-theme');
+    themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
