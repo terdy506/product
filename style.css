@@ -273,13 +273,64 @@ h1 {
     box-shadow: 0 4px 15px var(--shadow-color);
 }
 
-/* Footer */
-.site-footer {
+/* Consent Banner */
+.consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     background-color: var(--container-bg);
-    padding: 40px 20px;
-    margin-top: 80px;
+    box-shadow: 0 -4px 15px var(--shadow-color);
+    padding: 20px;
+    z-index: 2000;
     border-top: 1px solid var(--shadow-color);
-    text-align: center;
+}
+
+.consent-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.consent-content p {
+    font-size: 14px;
+    margin: 0;
+    color: var(--text-muted);
+}
+
+.consent-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.consent-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.consent-btn.accept {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.consent-btn.deny {
+    background-color: transparent;
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .consent-content {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 .footer-content {
