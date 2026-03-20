@@ -13,6 +13,7 @@ This project is a web-based lottery number generator with a modern dark/light mo
 *   **Disqus Comments:** A real-time comment section for user interaction.
 *   **Google AdSense:** Integrated for monetization with proper verification.
 *   **Google Analytics:** Track user engagement and traffic with G-3M6MV860FN.
+*   **Microsoft Clarity:** Heatmaps and session recordings for advanced user behavior analysis (ID: vysmevk8k7).
 *   **Visual Display:** The generated numbers are displayed in a clear and aesthetically pleasing format using Web Components.
 *   **Modern Design:** The UI is designed with modern CSS, including CSS variables, transitions, and responsive layout.
 
