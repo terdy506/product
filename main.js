@@ -1,0 +1,101 @@
+class LottoBall extends HTMLElement {
+    constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
+        const ball = document.createElement('div');
+        ball.setAttribute('class', 'ball');
+
+        const number = document.createElement('span');
+        number.textContent = this.getAttribute('number');
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .ball {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: radial-gradient(circle at 20px 20px, var(--ball-color, #f0f2f5), #808080);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                transition: transform 0.3s ease;
+            }
+            .ball:hover {
+                transform: scale(1.1);
+            }
+        `;
+
+        shadow.appendChild(style);
+        shadow.appendChild(ball);
+        ball.appendChild(number);
+    }
+
+    static get observedAttributes() {
+        return ['number', 'color'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'number') {
+            this.shadowRoot.querySelector('span').textContent = newValue;
+        } else if (name === 'color') {
+            this.shadowRoot.querySelector('.ball').style.setProperty('--ball-color', newValue);
+        }
+    }
+}
+
+customElements.define('lotto-ball', LottoBall);
+
+document.getElementById('generate-btn').addEventListener('click', () => {
+    const lottoBallsContainer = document.getElementById('lotto-balls');
+    lottoBallsContainer.innerHTML = '';
+    
+    // Generate 6 unique numbers
+    const numbers = new Set();
+    while(numbers.size < 6) {
+        const randomNumber = Math.floor(Math.random() * 45) + 1;
+        numbers.add(randomNumber);
+    }
+
+    const sortedNumbers = Array.from(numbers).sort((a,b) => a - b);
+
+    sortedNumbers.forEach((number, index) => {
+        setTimeout(() => {
+            const lottoBall = document.createElement('lotto-ball');
+            lottoBall.setAttribute('number', number);
+            const color = getColorForNumber(number);
+            lottoBall.setAttribute('color', color);
+            lottoBallsContainer.appendChild(lottoBall);
+        }, index * 150); // Animated delay for better UX
+    });
+});
+
+function getColorForNumber(number) {
+    if (number <= 10) return '#f44336'; // Red
+    if (number <= 20) return '#ff9800'; // Orange
+    if (number <= 30) return '#ffeb3b'; // Yellow
+    if (number <= 40) return '#4caf50'; // Green
+    return '#2196f3'; // Blue
+}
+
+// Theme Toggle Logic
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Check for saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    body.classList.add('dark-theme');
+    themeToggle.textContent = 'Light Mode';
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    const isDark = body.classList.contains('dark-theme');
+    themeToggle.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
