@@ -1,98 +1,131 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
+import { useAuth } from '@/context/AuthContext';
+import { useCommunity, Post } from '@/context/CommunityContext';
+import { router } from 'expo-router';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { IconSymbol } from '@/components/ui/icon-symbol';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { posts } = useCommunity();
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme ?? 'light'];
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.replace('/auth/login');
+    }
+  }, [isAuthenticated, authLoading]);
+
+  const renderPost = ({ item }: { item: Post }) => (
+    <TouchableOpacity 
+      style={[styles.postCard, { backgroundColor: theme.card, borderBottomColor: theme.border }]}
+      onPress={() => router.push(`/community/${item.id}`)}
+    >
+      <View style={styles.postHeader}>
+        <Text style={[styles.category, { color: theme.primary }]}>{item.category}</Text>
+        <Text style={[styles.time, { color: theme.secondary }]}>{item.createdAt}</Text>
+      </View>
+      <Text style={[styles.postTitle, { color: theme.text }]} numberOfLines={1}>{item.title}</Text>
+      <Text style={[styles.postContent, { color: theme.secondary }]} numberOfLines={2}>{item.content}</Text>
+      <View style={styles.postFooter}>
+        <View style={styles.stat}>
+          <IconSymbol name="message.fill" size={14} color={theme.secondary} />
+          <Text style={[styles.statText, { color: theme.secondary }]}>{item.commentCount}</Text>
+        </View>
+        <Text style={[styles.author, { color: theme.secondary }]}>{item.author}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  if (authLoading || !isAuthenticated) return null;
+
+  return (
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <FlatList
+        data={posts}
+        renderItem={renderPost}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent}
+      />
+      
+      <TouchableOpacity 
+        style={[styles.fab, { backgroundColor: theme.primary }]}
+        onPress={() => router.push('/community/new')}
+      >
+        <IconSymbol name="plus.circle.fill" size={24} color="#FFFFFF" />
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
   },
-  stepContainer: {
-    gap: 8,
+  listContent: {
+    padding: 16,
+    paddingBottom: 80,
+  },
+  postCard: {
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    borderBottomWidth: 1,
+  },
+  postHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  category: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  time: {
+    fontSize: 12,
+  },
+  postTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  postContent: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  postFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  stat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  statText: {
+    fontSize: 12,
+  },
+  author: {
+    fontSize: 12,
+  },
+  fab: {
     position: 'absolute',
+    right: 20,
+    bottom: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 });
